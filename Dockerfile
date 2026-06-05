@@ -1,14 +1,12 @@
-FROM golang:1.21-alpine
+FROM python:3.11-slim
 
 WORKDIR /app
 
 COPY . .
 
-RUN go mod init poc20 || true
-RUN go mod tidy
-
-RUN go build -o main .
+# Install dependencies if requirements.txt exists
+RUN pip install --no-cache-dir -r requirements.txt || true
 
 EXPOSE 8080
 
-CMD ["./main"]
+CMD ["python", "main.py"]
